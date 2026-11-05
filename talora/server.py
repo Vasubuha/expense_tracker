@@ -30,8 +30,6 @@ from validators import (
 # LOGGING
 # --------------------------------------------------
 
-LOG_DIR.mkdir(parents=True, exist_ok=True)
-
 logging.basicConfig(
     level=LOG_LEVEL,
     format=(
