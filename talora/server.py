@@ -14,7 +14,8 @@ from config import (
     MAX_PAGE_SIZE
 )
 
-from database import init_db, get_db
+from database import init_db, get_db, close_db
+from contextlib import asynccontextmanager
 
 from validators import (
     validate_date,
@@ -43,17 +44,32 @@ logging.basicConfig(
 
 logger = logging.getLogger("talora")
 
+@asynccontextmanager
+async def lifespan(server):
+    logger.info("Starting TALORA database initialization.")
+
+    await init_db()
+
+    logger.info("TALORA database initialized successfully.")
+
+    yield
+
+    await close_db()
+
+    logger.info("TALORA server shutting down.")
+
 # --------------------------------------------------
 # MCP SERVER
 # --------------------------------------------------
 
 mcp = FastMCP(
-    name="ExpenseTracker",
+    name="TALORA",
     instructions=(
         "An asynchronous expense management MCP server "
         "for recording, retrieving and summarizing "
         "personal expenses in Indian Rupees."
-    )
+    ),
+    lifespan=lifespan
 )
 
 
@@ -493,9 +509,7 @@ with category-wise totals and overall spending.
 
 if __name__ == "__main__":
 
-    asyncio.run(init_db())
-
-    logger.info("Starting ExpenseTracker MCP server.")
+    logger.info("Starting TALORA MCP server.")
 
     mcp.run(
         transport="http",
