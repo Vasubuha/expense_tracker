@@ -1,0 +1,20 @@
+[project]
+name = "mcp-server"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Vasu Buha", email = "vasubuha12@gmail.com" }
+]
+requires-python = ">=3.10"
+dependencies = [
+    "aiosqlite>=0.22.1",
+    "fastmcp>=4.1.6",
+]
+
+[project.scripts]
+mcp-server = "mcp_server:main"
+
+[build-system]
+requires = ["uv_build>=0.13.7,<0.14.0"]
+build-backend = "uv_build"
