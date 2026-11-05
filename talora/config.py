@@ -6,7 +6,7 @@ BASE_DIR = Path(__file__).resolve().parent
 DB_PATH = Path(
     os.getenv(
         "EXPENSE_DB_PATH",
-        str(BASE_DIR / "expense_tracker.db")
+        str(Path(tempfile.gettempdir()) / "talora" / "expense_tracker.db")
     )
 )
 
@@ -17,7 +17,9 @@ CATEGORIES_PATH = Path(
     )
 )
 
-LOG_DIR = BASE_DIR / "logs"
+import tempfile
+
+LOG_DIR = Path(tempfile.gettempdir()) / "talora" / "logs"
 
 LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO").upper()
 

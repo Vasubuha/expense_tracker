@@ -34,18 +34,16 @@ LOG_DIR.mkdir(parents=True, exist_ok=True)
 
 logging.basicConfig(
     level=LOG_LEVEL,
-    format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
+    format=(
+        "%(asctime)s | %(levelname)s | "
+        "%(name)s | %(message)s"
+    ),
     handlers=[
-        logging.FileHandler(
-            LOG_DIR / "app.log",
-            encoding="utf-8"
-        ),
         logging.StreamHandler()
     ]
 )
 
-logger = logging.getLogger("expense_tracker")
-
+logger = logging.getLogger("talora")
 
 # --------------------------------------------------
 # MCP SERVER
